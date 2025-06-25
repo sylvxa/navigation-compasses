@@ -3,9 +3,9 @@
 	"id": "navigation-compasses",
 	"version": "${version}",
 	"name": "Navigation Compasses",
-	"description": "A Polymer \"port\" of Nature's and Explorer's Sompass",
+	"description": "A Polymer mod which adds compasses that locate points of interest.",
 	"authors": [
-		"CHANGE ME"
+		"sylvxa"
 	],
 	"contact": {
 		"homepage": "https://sylvie.lol/",
@@ -27,7 +27,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",
-		"minecraft": "~1.21.5",
+		"minecraft": ">=1.21.6",
 		"java": ">=21",
 		"fabric-api": "*"
 	}

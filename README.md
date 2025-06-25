@@ -1,9 +1,14 @@
 # Navigation Compasses
 
+A Polymer mod which adds compasses that locate points of interest.
+
 ![The logo for Navigation Compasses](src/main/resources/assets/navigation-compasses/icon.png)
 
 > [!WARNING]
 > This mod can cause extreme lag due to the nature of structure/biome location. This may be remedied in the future with async location but for now, be careful! 
+
+> [!NOTE]
+> This mod is essentially a port of [Nature's Compass](https://modrinth.com/mod/natures-compass) and [Explorer's Compass](https://modrinth.com/mod/explorers-compass), and you should absolutely use them if you aren't targeting Bedrock or Vanilla clients.
 
 ## Usage
 
