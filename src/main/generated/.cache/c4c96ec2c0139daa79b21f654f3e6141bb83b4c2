@@ -1,0 +1,5 @@
+// 1.21.6 Release Candidate 1	-999999999-01-01T00:00:00	Navigation Compasses/NavigationCompassesRecipeProvider
+0a55192f9b4eb616b0c03d3777626662fc35a40f data/navigation-compasses/advancement/recipes/tools/biome_locator.json
+f50ba9290d9068a41b731534ba1920768a54a492 data/navigation-compasses/advancement/recipes/tools/structure_locator.json
+4f969d46185c85d4a9697dbda46a8b34276b772b data/navigation-compasses/recipe/biome_locator.json
+cb5f7ab56d5557cd6a1d17692958de57737148b4 data/navigation-compasses/recipe/structure_locator.json

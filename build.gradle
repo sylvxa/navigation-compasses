@@ -21,6 +21,10 @@ repositories {
 	maven {
 		url 'https://maven.nucleoid.xyz'
 	}
+
+	maven {
+		url 'https://repo.opencollab.dev/main/'
+	}
 }
 
 fabricApi {
@@ -40,12 +44,13 @@ dependencies {
 
 	// Polymer
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
-
-	// SGUI, you probably want this for UI but it depends on your use case
-	// modImplementation include("eu.pb4:sgui:${project.sgui_version}")
+	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
 
 	// Server-Translations
 	modImplementation include("xyz.nucleoid:server-translations-api:${project.server_translations_version}")
+
+	// Floodgate
+	compileOnly("org.geysermc.floodgate:api:${project.floodgate_version}")
 }
 
 processResources {

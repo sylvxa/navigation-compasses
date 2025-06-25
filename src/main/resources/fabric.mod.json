@@ -1,29 +1,29 @@
 {
 	"schemaVersion": 1,
-	"id": "polymer-template-mod",
+	"id": "navigation-compasses",
 	"version": "${version}",
-	"name": "Polymer Template Mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Navigation Compasses",
+	"description": "A Polymer \"port\" of Nature's and Explorer's Sompass",
 	"authors": [
 		"CHANGE ME"
 	],
 	"contact": {
-		"homepage": "https://polymer.pb4.eu/latest/",
-		"sources": "https://github.com/sylvxa/polymer-template-mod"
+		"homepage": "https://sylvie.lol/",
+		"sources": "https://github.com/sylvxa/navigation-compasses"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/polymer-template-mod/icon.png",
+	"icon": "assets/navigation-compasses/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.PolymerTemplateMod"
+			"lol.sylvie.navigation.NavigationCompasses"
 		],
 		"fabric-datagen": [
-			"com.example.datagen.PolymerTemplateModDataGenerator"
+			"lol.sylvie.navigation.datagen.ModDataGenerator"
 		]
 	},
 	"mixins": [
-		"polymer-template-mod.mixins.json"
+		"navigation-compasses.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",

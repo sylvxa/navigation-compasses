@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "b": "#minecraft:stone_bricks",
+    "c": "minecraft:compass",
+    "m": "minecraft:map",
+    "w": "minecraft:cobweb"
+  },
+  "pattern": [
+    "wmw",
+    "bcb",
+    "wbw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "navigation-compasses:structure_locator"
+  }
+}

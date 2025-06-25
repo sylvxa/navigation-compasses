@@ -1,23 +1,36 @@
-# Polymer Template Mod
+# Navigation Compasses
+
+![The logo for Navigation Compasses](src/main/resources/assets/navigation-compasses/icon.png)
+
+> [!WARNING]
+> This mod can cause extreme lag due to the nature of structure/biome location. This may be remedied in the future with async location but for now, be careful! 
 
 ## Usage
 
-To make your own mod, make sure you:
-- Rename instances of `com.example` to your own package name
-- In `fabric.mod.json`
-- - Add your name in the `authors` section
-- - Change the `contact` info to match your mod
-- - Change the `id` and `name`, making sure to follow the conventions specified on the [Fabric Wiki](https://wiki.fabricmc.net/documentation:fabric_mod_json)
-- Change the `MOD_ID` field in the `PolymerTemplateMod` class to your mod id
+### For server owners
 
-## Maintaining
+You can install the mod with Fabric API and it will work as intended. However, for the best experience I recommend you install [Polymer](https://modrinth.com/mod/polymer) and set up [resource pack hosting](https://polymer.pb4.eu/latest/user/resource-pack-hosting/).
 
-Update dependency versions in `gradle.properties` with their respective repository links
+There is a configuration file at `config/navigation-compasses.json` which lets you disable the compass items (ex. if you are running Terra you might want to disable biome locators due to the lag it causes), modify the search range (which will reduce the length lag spikes), and the search cooldown (in ticks, will probably reduce number of lag spikes).
 
-## Setup
+It should work with any other structure/biome mods, though some may cause lag while locating depending on rarity.
 
-For setup instructions please see the [fabric documentation page](https://docs.fabricmc.net/develop/getting-started/setting-up-a-development-environment) that relates to the IDE that you are using.
+Floodgate (Bedrock) players have special GUI handling, so it'll work great with them. (If you are concerned about item textures, you can try the ***heavily beta not-complete could-break no-warranty*** compatibility mod [Bedframe](https://github.com/sylvxa/bedframe), which adds Polymer textures to Geyser)
 
-## License
+### For players
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own project
+The **Biome Locator** does what it says on the tin, it opens a menu containing every biome and lets you select one to locate.
+
+![The recipe of the Biome Locator, consisting of 4 saplings in the corners, 3 dirt blocks in the left, bottom, and right middle, a flower in the top middle, and a compass in the middle middle.](gallery/biome_recipe.png)
+
+*The saplings can be any kind of sapling, the dirt can be any dirt-like block, and the flower can be any short flower.*
+
+The **Structure Locator** works the same way but for structures.
+
+![The recipe of the Structure Locator, consisting of 4 cobwebs in the corners, 3 cracked stone bricks in the left, bottom, and right middle, a map in the top middle, and a compass in the middle middle.](gallery/structure_recipe.png)
+
+The locators add a locator bar waypoint and action bar message to help assist with navigation.
+
+![A picture of the locator bar with the navigation helper elements](gallery/hotbar.png)
+
+*These elements are faked through some packet trickery and are only visible to the player locating.*

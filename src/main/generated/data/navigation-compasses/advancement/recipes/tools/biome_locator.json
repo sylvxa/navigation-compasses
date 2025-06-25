@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_biome_locator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "navigation-compasses:biome_locator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "navigation-compasses:biome_locator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_biome_locator"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "navigation-compasses:biome_locator"
+    ]
+  }
+}

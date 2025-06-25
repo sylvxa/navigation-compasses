@@ -1,0 +1,7 @@
+{
+  "itemGroup.navigation-compasses": "Navigation Compasses",
+  "item.navigation-compasses.biome_locator": "Biome Locator",
+  "item.navigation-compasses.structure_locator": "Structure Locator",
+  "error.navigation-compasses.not_found": "Couldn't find requested location.",
+  "message.navigation-compasses.arrived": "You have arrived!"
+}

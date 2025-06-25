@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "c": "minecraft:compass",
+    "d": "#minecraft:dirt",
+    "p": "#minecraft:small_flowers",
+    "s": "#minecraft:saplings"
+  },
+  "pattern": [
+    "sps",
+    "dcd",
+    "sds"
+  ],
+  "result": {
+    "count": 1,
+    "id": "navigation-compasses:biome_locator"
+  }
+}
