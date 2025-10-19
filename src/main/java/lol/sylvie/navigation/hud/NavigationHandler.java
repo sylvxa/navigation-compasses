@@ -38,7 +38,7 @@ public class NavigationHandler {
             player.sendMessage(Text.translatable("error.navigation-compasses.not_found").formatted(Formatting.RED), true);
             return;
         }
-        ResolvedLocation resolvedLocation = new ResolvedLocation(location, location.generateUUID(), pos, player.getWorld().getRegistryKey());
+        ResolvedLocation resolvedLocation = new ResolvedLocation(location, location.generateUUID(), pos, player.getEntityWorld().getRegistryKey());
         HashMap<LocationGui.Location.Type, ResolvedLocation> locations = WAYPOINT_MAP.computeIfAbsent(player.getUuid(), (k) -> new HashMap<>());
         if (locations.containsKey(location.type()))
             locations.get(location.type()).stopTracking(player);
@@ -76,7 +76,7 @@ public class NavigationHandler {
 
             if (!player.isHolding(compass)) continue;
 
-            double distance = player.getPos().multiply(1, 0, 1).distanceTo(location.result.toCenterPos().multiply(1, 0, 1));
+            double distance = player.getEntityPos().multiply(1, 0, 1).distanceTo(location.result.toCenterPos().multiply(1, 0, 1));
             String info = String.format("%s: %s, %s, %s / %s blocks away", data.name(), location.result.getX(), location.result.getY(), location.result.getZ(), FORMAT.format(distance));
 
             text = Text.literal(info).formatted(data.type().getColor());
@@ -141,7 +141,7 @@ public class NavigationHandler {
         }
 
         public boolean isPlayerInDimension(ServerPlayerEntity player) {
-            return player.getWorld().getRegistryKey().equals(this.worldKey);
+            return player.getEntityWorld().getRegistryKey().equals(this.worldKey);
         }
 	}
 }

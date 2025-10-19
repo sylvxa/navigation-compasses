@@ -4,14 +4,21 @@
 	"version": "${version}",
 	"name": "Navigation Compasses",
 	"description": "A Polymer mod which adds compasses that locate points of interest.",
-	"authors": [
-		"sylvxa"
-	],
-	"contact": {
-		"homepage": "https://sylvie.lol/",
-		"sources": "https://github.com/sylvxa/navigation-compasses",
-		"discord": "https://discord.gg/5qzrB98sBA"
-	},
+    "authors": [
+      {
+        "name": "sylvxa",
+        "contact": {
+          "email": "me@sylvie.lol",
+          "homepage": "https://sylvie.lol"
+        }
+      }
+    ],
+    "contact": {
+      "repo": "https://github.com/sylvxa/navigation-compasses",
+      "homepage": "https://modrinth.com/project/navigation-compasses",
+      "issues": "https://github.com/sylvxa/navigation-compasses/issues",
+      "discord": "https://discord.gg/5qzrB98sBA"
+    },
 	"license": "CC0-1.0",
 	"icon": "assets/navigation-compasses/icon.png",
 	"environment": "*",
@@ -28,7 +35,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",
-		"minecraft": ">=1.21.6",
+		"minecraft": ">=1.21.9",
 		"java": ">=21",
 		"fabric-api": "*"
 	}
