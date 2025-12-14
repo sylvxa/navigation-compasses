@@ -3,9 +3,9 @@ package lol.sylvie.navigation.gui.impl;
 import lol.sylvie.navigation.gui.LocationGui;
 import lol.sylvie.navigation.hud.NavigationHandler;
 import lol.sylvie.navigation.util.FloodgateHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.form.Form;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -16,11 +16,11 @@ import java.util.List;
 
 // Technically this isn't necessary (Geyser does dialog translation), but it looks a tad nicer so
 public class BedrockLocationGui {
-    private final ServerPlayerEntity player;
+    private final ServerPlayer player;
     private final ItemStack itemStack;
     private final List<LocationGui.Location> locations;
 
-    public BedrockLocationGui(ServerPlayerEntity player, ItemStack itemStack, List<LocationGui.Location> locations) {
+    public BedrockLocationGui(ServerPlayer player, ItemStack itemStack, List<LocationGui.Location> locations) {
         this.player = player;
         this.itemStack = itemStack;
         this.locations = locations;
@@ -49,7 +49,7 @@ public class BedrockLocationGui {
                         .toList();
 
         SimpleForm.Builder builder = SimpleForm.builder()
-                .title(Text.translatable(itemStack.getItem().getTranslationKey()).getString())
+                .title(Component.translatable(itemStack.getItem().getDescriptionId()).getString())
                 .content(filtered.isEmpty() ? "No locations found! Try searching again." : "Select a location.");
 
         builder.button("Search", FormImage.of(FormImage.Type.PATH, "textures/ui/magnifyingGlass.png"));
@@ -70,11 +70,11 @@ public class BedrockLocationGui {
     }
 
     protected void sendForm(Form form) {
-        FloodgateApi.getInstance().sendForm(player.getUuid(), form);
+        FloodgateApi.getInstance().sendForm(player.getUUID(), form);
     }
 
-    public static boolean open(ServerPlayerEntity player, ItemStack itemStack, List<LocationGui.Location> locations) {
-        if (!FloodgateHelper.isFloodgatePlayer(player.getUuid())) return false;
+    public static boolean open(ServerPlayer player, ItemStack itemStack, List<LocationGui.Location> locations) {
+        if (!FloodgateHelper.isFloodgatePlayer(player.getUUID())) return false;
 
         new BedrockLocationGui(player, itemStack, locations).sendBrowserForm("");
         return true;

@@ -4,18 +4,15 @@ import com.mojang.datafixers.util.Pair;
 import lol.sylvie.navigation.config.ConfigHandler;
 import lol.sylvie.navigation.gui.LocationGui;
 import lol.sylvie.navigation.item.LocatorItem;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.resource.featuretoggle.FeatureSet;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.structure.Structure;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -23,19 +20,19 @@ import java.util.List;
 import java.util.function.Function;
 
 public class StructureLocatorItem extends LocatorItem {
-    public StructureLocatorItem(Settings settings) {
+    public StructureLocatorItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    protected List<LocationGui.Location> generateLocations(ServerWorld world) {
-        Registry<Structure> registry = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE);
-        return registry.getKeys().stream().map(structure -> {
-            Identifier structureId = structure.getValue();
+    protected List<LocationGui.Location> generateLocations(ServerLevel world) {
+        Registry<Structure> registry = world.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+        return registry.registryKeySet().stream().map(structure -> {
+            Identifier structureId = structure.identifier();
             String structureName = String.join(" ", Arrays.stream(structureId.getPath().split("_")).map(StringUtils::capitalize).toList());
 
             Function<BlockPos, BlockPos> structureLocator = pos -> {
-                Pair<BlockPos, RegistryEntry<Structure>> location = world.getChunkManager().getChunkGenerator().locateStructure(world, RegistryEntryList.of(registry.getEntry(structureId).orElseThrow()), pos, ConfigHandler.STATE.range(), false);
+                Pair<BlockPos, Holder<Structure>> location = world.getChunkSource().getGenerator().findNearestMapStructure(world, HolderSet.direct(registry.get(structureId).orElseThrow()), pos, ConfigHandler.STATE.range(), false);
                 if (location == null) return null;
                 return location.getFirst();
             };
@@ -44,7 +41,7 @@ public class StructureLocatorItem extends LocatorItem {
     }
 
     @Override
-    public boolean isEnabled(FeatureSet enabledFeatures) {
+    public boolean isEnabled(FeatureFlagSet enabledFeatures) {
         return ConfigHandler.STATE.structure();
     }
 }

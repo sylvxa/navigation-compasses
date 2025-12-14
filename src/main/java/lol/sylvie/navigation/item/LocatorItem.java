@@ -3,44 +3,43 @@ package lol.sylvie.navigation.item;
 import eu.pb4.polymer.core.api.item.SimplePolymerItem;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import lol.sylvie.navigation.gui.LocationGui;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LodestoneTrackerComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 
 public abstract class LocatorItem extends SimplePolymerItem {
-    public LocatorItem(Settings settings) {
+    public LocatorItem(Properties settings) {
         super(settings, Items.RECOVERY_COMPASS, true);
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        if (!(user instanceof ServerPlayerEntity player))
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (!(user instanceof ServerPlayer player))
             return super.use(world, user, hand);
-        ItemStack itemStack = player.getStackInHand(hand);
-        LocationGui.open(player, itemStack, generateLocations((ServerWorld) world));
-        return ActionResult.SUCCESS;
+        ItemStack itemStack = player.getItemInHand(hand);
+        LocationGui.open(player, itemStack, generateLocations((ServerLevel) world));
+        return InteractionResult.SUCCESS;
     }
 
-    protected abstract List<LocationGui.Location> generateLocations(ServerWorld world);
+    protected abstract List<LocationGui.Location> generateLocations(ServerLevel world);
 
     @Override
-    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, PacketContext context) {
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipFlag tooltipType, PacketContext context) {
         ItemStack displayStack = super.getPolymerItemStack(itemStack, tooltipType, context);
         if (!PolymerResourcePackUtils.hasMainPack(context)) {
-            displayStack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            displayStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
         }
         return displayStack;
     }

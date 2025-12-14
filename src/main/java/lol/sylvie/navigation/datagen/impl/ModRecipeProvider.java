@@ -3,49 +3,48 @@ package lol.sylvie.navigation.datagen.impl;
 import lol.sylvie.navigation.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
-    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
-        return new RecipeGenerator(registryLookup, exporter) {
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+        return new RecipeProvider(registryLookup, exporter) {
             @Override
-            public void generate() {
-                RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
-                createShaped(RecipeCategory.TOOLS, ModItems.BIOME_LOCATOR, 1)
+            public void buildRecipes() {
+                HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+                shaped(RecipeCategory.TOOLS, ModItems.BIOME_LOCATOR, 1)
                         .pattern("sps")
                         .pattern("dcd")
                         .pattern("sds")
-                        .input('s', ItemTags.SAPLINGS)
-                        .input('d', ItemTags.DIRT)
-                        .input('p', ItemTags.SMALL_FLOWERS)
-                        .input('c', Items.COMPASS)
-                        .criterion(hasItem(ModItems.BIOME_LOCATOR), conditionsFromItem(ModItems.BIOME_LOCATOR))
-                        .offerTo(exporter);
+                        .define('s', ItemTags.SAPLINGS)
+                        .define('d', ItemTags.DIRT)
+                        .define('p', ItemTags.SMALL_FLOWERS)
+                        .define('c', Items.COMPASS)
+                        .unlockedBy(getHasName(ModItems.BIOME_LOCATOR), has(ModItems.BIOME_LOCATOR))
+                        .save(output);
 
-                createShaped(RecipeCategory.TOOLS, ModItems.STRUCTURE_LOCATOR, 1)
+                shaped(RecipeCategory.TOOLS, ModItems.STRUCTURE_LOCATOR, 1)
                         .pattern("wmw")
                         .pattern("bcb")
                         .pattern("wbw")
-                        .input('m', Items.MAP)
-                        .input('w', Items.COBWEB)
-                        .input('b', ItemTags.STONE_BRICKS)
-                        .input('c', Items.COMPASS)
-                        .criterion(hasItem(ModItems.STRUCTURE_LOCATOR), conditionsFromItem(ModItems.STRUCTURE_LOCATOR))
-                        .offerTo(exporter);
+                        .define('m', Items.MAP)
+                        .define('w', Items.COBWEB)
+                        .define('b', ItemTags.STONE_BRICKS)
+                        .define('c', Items.COMPASS)
+                        .unlockedBy(getHasName(ModItems.STRUCTURE_LOCATOR), has(ModItems.STRUCTURE_LOCATOR))
+                        .save(output);
             }
         };
     }

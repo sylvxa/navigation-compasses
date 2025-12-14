@@ -5,11 +5,11 @@ import lol.sylvie.navigation.gui.impl.BedrockLocationGui;
 import lol.sylvie.navigation.gui.impl.JavaLocationGui;
 import lol.sylvie.navigation.item.ModItems;
 import lol.sylvie.navigation.util.FloodgateHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
@@ -18,7 +18,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 public class LocationGui {
-    public static void open(ServerPlayerEntity player, ItemStack itemStack, List<Location> locations) {
+    public static void open(ServerPlayer player, ItemStack itemStack, List<Location> locations) {
         if (!(FloodgateHelper.FLOODGATE_PRESENT && BedrockLocationGui.open(player, itemStack, locations)))
             JavaLocationGui.open(player, itemStack, locations);
     }
@@ -28,8 +28,8 @@ public class LocationGui {
             return UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8));
         }
 
-        public void activateCooldown(ServerPlayerEntity player) {
-            player.getItemCooldownManager().set(type.item.getDefaultStack(), ConfigHandler.STATE.cooldown());
+        public void activateCooldown(ServerPlayer player) {
+            player.getCooldowns().addCooldown(type.item.getDefaultInstance(), ConfigHandler.STATE.cooldown());
         }
 
         @Override
@@ -38,18 +38,18 @@ public class LocationGui {
         }
 
         public enum Type {
-            BIOME(Formatting.GREEN, ModItems.BIOME_LOCATOR),
-            STRUCTURE(Formatting.GRAY, ModItems.STRUCTURE_LOCATOR);
+            BIOME(ChatFormatting.GREEN, ModItems.BIOME_LOCATOR),
+            STRUCTURE(ChatFormatting.GRAY, ModItems.STRUCTURE_LOCATOR);
 
-            private final Formatting color;
+            private final ChatFormatting color;
             private final Item item;
 
-            Type(Formatting color, Item item) {
+            Type(ChatFormatting color, Item item) {
                 this.color = color;
                 this.item = item;
             }
 
-            public Formatting getColor() {
+            public ChatFormatting getColor() {
                 return this.color;
             }
 
