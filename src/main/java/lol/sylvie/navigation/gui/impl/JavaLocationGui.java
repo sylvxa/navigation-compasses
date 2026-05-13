@@ -3,6 +3,7 @@ package lol.sylvie.navigation.gui.impl;
 import lol.sylvie.navigation.NavigationCompasses;
 import lol.sylvie.navigation.gui.LocationGui;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -67,7 +68,7 @@ public class JavaLocationGui {
     }
 
     private void sendDialog(Dialog dialog) {
-        player.openDialog(new Holder.Direct<>(dialog));
+        player.openDialog(new Holder.Direct<>(dialog, DataComponentMap.EMPTY));
     }
 
     public static void open(ServerPlayer player, ItemStack itemStack, List<LocationGui.Location> locations) {

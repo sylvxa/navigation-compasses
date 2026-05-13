@@ -21,7 +21,7 @@ public class NavigationHandler {
     private static final DecimalFormat FORMAT = new DecimalFormat("0.0");
 
     public static void initialize() {
-        ServerTickEvents.START_WORLD_TICK.register(serverWorld -> serverWorld.players().stream().filter(p -> WAYPOINT_MAP.containsKey(p.getUUID())).forEach(NavigationHandler::handleOverlay));
+        ServerTickEvents.START_LEVEL_TICK.register(serverWorld -> serverWorld.players().stream().filter(p -> WAYPOINT_MAP.containsKey(p.getUUID())).forEach(NavigationHandler::handleOverlay));
 
         ServerPlayConnectionEvents.JOIN.register((networkHandler, packetSender, server) -> {
             ServerPlayer player = networkHandler.player;
@@ -34,7 +34,7 @@ public class NavigationHandler {
     public static void addLocation(ServerPlayer player, LocationGui.Location location) {
         BlockPos pos = location.position().apply(player.blockPosition());
         if (pos == null) {
-            player.displayClientMessage(Component.translatable("error.navigation-compasses.not_found").withStyle(ChatFormatting.RED), true);
+            player.sendOverlayMessage(Component.translatable("error.navigation-compasses.not_found").withStyle(ChatFormatting.RED));
             return;
         }
         ResolvedLocation resolvedLocation = new ResolvedLocation(location, location.generateUUID(), pos, player.level().dimension());
@@ -89,7 +89,7 @@ public class NavigationHandler {
         }
 
         if (text != null)
-            player.displayClientMessage(text, true);
+            player.sendOverlayMessage(text);
 
         choppingBlock.forEach(l -> removeLocation(player, l));
     }
